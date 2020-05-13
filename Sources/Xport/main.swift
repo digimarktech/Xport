@@ -19,7 +19,7 @@ struct Xport: ParsableCommand {
         guard let pathURL = URL(string: FileManager.default.currentDirectoryPath) else {
             return
         }
-        let destination = "~/Xport12345/\(pathURL.lastPathComponent)"
+        let destination = "~/Xport/\(pathURL.lastPathComponent)"
         
         print("-------------------------------")
         print("Configuration:")
