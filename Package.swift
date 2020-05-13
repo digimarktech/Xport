@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "Xport",
+    products: [
+        .executable(name: "Xport", targets: ["Xport"])
+    ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser",
                  from: "0.0.1"),
