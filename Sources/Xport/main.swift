@@ -11,9 +11,6 @@ struct Xport: ParsableCommand {
     @Argument(help: "Specify your hostname.")
     var hostname: String
     
-    @Argument(help: "Specify your package name.")
-    var packagename: String
-    
     func run() throws {
         
         guard let pathURL = URL(string: FileManager.default.currentDirectoryPath) else {
@@ -27,7 +24,6 @@ struct Xport: ParsableCommand {
         print("Username: \(username)")
         print("Hostname: \(hostname)")
         print("Destination: \(destination)")
-        print("Package Name: \(packagename)")
         print("-------------------------------")
         
         print("Getting ready to sync project to \(username)@\(hostname):\(destination)")
@@ -35,7 +31,7 @@ struct Xport: ParsableCommand {
         /// Remote into Pi and create directory to copy files to
         let sshCommand = "ssh \(username)@\(hostname) mkdir -p \(destination)"
         let rsyncCommand = "rsync -azP --exclude=.build* --exclude=Packages/* --exclude=*.xcodeproj* --exclude=*.DS_Store* . \(username)@\(hostname):\(destination)"
-        let remoteBuildCommand = "ssh \(username)@\(hostname) cd \(destination)/\(packagename); swift build"
+        let remoteBuildCommand = "ssh \(username)@\(hostname) cd \(destination); swift build"
         
         let command1 = shell(sshCommand)
         print(command1.output)
