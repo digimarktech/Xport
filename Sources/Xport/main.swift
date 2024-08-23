@@ -32,7 +32,8 @@ struct Xport: ParsableCommand {
         let sshCommand = "ssh \(username)@\(hostname) mkdir -p \(destination)"
         let rsyncCommand = "rsync -azP --exclude=.build* --exclude=Packages/* --exclude=*.xcodeproj* --exclude=*.DS_Store* . \(username)@\(hostname):\(destination)"
         let remoteBuildCommand = "ssh \(username)@\(hostname) cd \(destination); swift build"
-        
+        let remoteRunCommand = "ssh \(username)@\(hostname) cd \(destination); swift run --skip-build"
+
         let command1 = shell(sshCommand)
         print(command1.output)
         if command1.status == 0 {
@@ -45,6 +46,12 @@ struct Xport: ParsableCommand {
                 print(command3.output)
                 if command3.status == 0 {
                     print("Successfully built project on your Raspberry Pi.")
+                    print("Attempting to run the project")
+                    let command4 = shell(remoteRunCommand)
+                    print(command4.output)
+                    if command4.status == 0 {
+                        print("Succesfully ran the project on your Raspberry Pi.")
+                    }
                 }
             }
         }
